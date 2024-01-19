@@ -38,8 +38,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import vectorwing.farmersdelight.FarmersDelight;
@@ -61,8 +59,6 @@ public class SkilletItem extends BlockItem
 	public static final Tiers SKILLET_TIER = Tiers.IRON;
 	protected static final UUID FD_ATTACK_KNOCKBACK_UUID = UUID.fromString("e56350e0-8756-464d-92f9-54289ab41e0a");
 
-	public static float localAtkStrength = 1;
-
 	private final Multimap<Attribute, AttributeModifier> toolAttributes;
 
 	public SkilletItem(Block block, Item.Properties properties) {
@@ -79,12 +75,6 @@ public class SkilletItem extends BlockItem
 	public static class SkilletEvents
 	{
 		@SubscribeEvent
-		public static void trackCooldown(AttackEntityEvent event) {
-			Player player = event.getEntity();
-			localAtkStrength = player.getAttackStrengthScale(0.0F);
-		}
-
-		@SubscribeEvent
 		public static void playSkilletAttackSound(LivingDamageEvent event) {
 			DamageSource damageSource = event.getSource();
 			Entity attacker = damageSource.getDirectEntity();
@@ -94,7 +84,8 @@ public class SkilletItem extends BlockItem
 
 			float pitch = 0.9F + (livingEntity.getRandom().nextFloat() * 0.2F);
 			if (livingEntity instanceof Player player) {
-				if (localAtkStrength > 0.8F) {
+				float attackPower = player.getAttackStrengthScale(0.0F);
+				if (attackPower > 0.8F) {
 					player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.ITEM_SKILLET_ATTACK_STRONG.get(), SoundSource.PLAYERS, 1.0F, pitch);
 				} else {
 					player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.ITEM_SKILLET_ATTACK_WEAK.get(), SoundSource.PLAYERS, 0.8F, 0.9F);
