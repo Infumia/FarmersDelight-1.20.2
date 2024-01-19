@@ -53,6 +53,10 @@ public class FarmersDelight
 		ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
 		ModLootFunctions.LOOT_FUNCTIONS.register(modEventBus);
 		ModLootModifiers.LOOT_MODIFIERS.register(modEventBus);
+		ModConditionCodecs.CONDITION_CODECS.register(modEventBus);
+		ModIngredientTypes.INGREDIENT_TYPES.register(modEventBus);
+
+		ModAdvancements.register();
 
 		WildCropGeneration.load();
 		MinecraftForge.EVENT_BUS.addListener(VillageStructures::addNewVillageBuilding);
