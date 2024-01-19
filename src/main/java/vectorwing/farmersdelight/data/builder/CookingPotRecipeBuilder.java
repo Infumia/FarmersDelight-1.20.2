@@ -119,7 +119,8 @@ public class CookingPotRecipeBuilder
 
 	public void build(RecipeOutput outputIn, ResourceLocation id) {
 		if (!advancement.criteria.buildOrThrow().isEmpty()) {
-			advancement.parent(RecipeBuilder.ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
+			advancement.parent(new AdvancementHolder(RecipeBuilder.ROOT_RECIPE_ADVANCEMENT, null))
+					.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
 					.rewards(AdvancementRewards.Builder.recipe(id))
 					.requirements(AdvancementRequirements.Strategy.OR);
 			ResourceLocation advancementId = new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath());
