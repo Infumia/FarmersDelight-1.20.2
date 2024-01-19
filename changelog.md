@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+### Updates
+- Mod updated to 1.20.2 Forge.
+
 ## 1.2.3
 
 ### Additions
