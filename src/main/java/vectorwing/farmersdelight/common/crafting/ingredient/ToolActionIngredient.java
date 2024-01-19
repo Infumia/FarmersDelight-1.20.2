@@ -17,7 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class ToolActionIngredient extends Ingredient
 {
-	private static final Serializer SERIALIZER = new Serializer();
+	public static final Serializer SERIALIZER = new Serializer();
 	public final ToolAction toolAction;
 
 	/**
