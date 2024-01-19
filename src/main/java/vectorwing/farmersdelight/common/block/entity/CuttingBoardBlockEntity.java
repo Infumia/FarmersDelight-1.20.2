@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -76,10 +77,10 @@ public class CuttingBoardBlockEntity extends SyncedBlockEntity
 
 		if (isItemCarvingBoard) return false;
 
-		Optional<CuttingBoardRecipe> matchingRecipe = getMatchingRecipe(new RecipeWrapper(inventory), toolStack, player);
+		Optional<RecipeHolder<CuttingBoardRecipe>> matchingRecipe = getMatchingRecipe(new RecipeWrapper(inventory), toolStack, player);
 
 		matchingRecipe.ifPresent(recipe -> {
-			List<ItemStack> results = recipe.rollResults(level.random, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, toolStack));
+			List<ItemStack> results = recipe.value().rollResults(level.random, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, toolStack));
 			for (ItemStack resultStack : results) {
 				Direction direction = getBlockState().getValue(CuttingBoardBlock.FACING).getCounterClockWise();
 				ItemUtils.spawnItemEntity(level, resultStack.copy(),
@@ -93,7 +94,7 @@ public class CuttingBoardBlockEntity extends SyncedBlockEntity
 					toolStack.setCount(0);
 				}
 			}
-			playProcessingSound(recipe.getSoundEventID(), toolStack, getStoredItem());
+			playProcessingSound(recipe.value().getSoundEvent().orElse(null), toolStack, getStoredItem());
 			removeItem();
 			if (player instanceof ServerPlayer) {
 				ModAdvancements.CUTTING_BOARD.trigger((ServerPlayer) player);
@@ -103,36 +104,35 @@ public class CuttingBoardBlockEntity extends SyncedBlockEntity
 		return matchingRecipe.isPresent();
 	}
 
-	private Optional<CuttingBoardRecipe> getMatchingRecipe(RecipeWrapper recipeWrapper, ItemStack toolStack, @Nullable Player player) {
+	private Optional<RecipeHolder<CuttingBoardRecipe>> getMatchingRecipe(RecipeWrapper recipeWrapper, ItemStack toolStack, @Nullable Player player) {
 		if (level == null) return Optional.empty();
 
 		if (lastRecipeID != null) {
-			Recipe<RecipeWrapper> recipe = ((RecipeManagerAccessor) level.getRecipeManager())
+			RecipeHolder<CuttingBoardRecipe> recipe = ((RecipeManagerAccessor) level.getRecipeManager())
 					.getRecipeMap(ModRecipeTypes.CUTTING.get())
 					.get(lastRecipeID);
-			if (recipe instanceof CuttingBoardRecipe && recipe.matches(recipeWrapper, level) && ((CuttingBoardRecipe) recipe).getTool().test(toolStack)) {
-				return Optional.of((CuttingBoardRecipe) recipe);
+			if (recipe.value().matches(recipeWrapper, level) && recipe.value().getTool().test(toolStack)) {
+				return Optional.of(recipe);
 			}
 		}
 
-		List<CuttingBoardRecipe> recipeList = level.getRecipeManager().getRecipesFor(ModRecipeTypes.CUTTING.get(), recipeWrapper, level);
+		List<RecipeHolder<CuttingBoardRecipe>> recipeList = level.getRecipeManager().getRecipesFor(ModRecipeTypes.CUTTING.get(), recipeWrapper, level);
 		if (recipeList.isEmpty()) {
 			if (player != null)
 				player.displayClientMessage(TextUtils.getTranslation("block.cutting_board.invalid_item"), true);
 			return Optional.empty();
 		}
-		Optional<CuttingBoardRecipe> recipe = recipeList.stream().filter(cuttingRecipe -> cuttingRecipe.getTool().test(toolStack)).findFirst();
+		Optional<RecipeHolder<CuttingBoardRecipe>> recipe = recipeList.stream().filter(cuttingRecipe -> cuttingRecipe.value().getTool().test(toolStack)).findFirst();
 		if (!recipe.isPresent()) {
 			if (player != null)
 				player.displayClientMessage(TextUtils.getTranslation("block.cutting_board.invalid_tool"), true);
 			return Optional.empty();
 		}
-		lastRecipeID = recipe.get().getId();
+		lastRecipeID = recipe.get().id();
 		return recipe;
 	}
 
-	public void playProcessingSound(String soundEventID, ItemStack tool, ItemStack boardItem) {
-		SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(soundEventID));
+	public void playProcessingSound(@Nullable SoundEvent sound, ItemStack tool, ItemStack boardItem) {
 
 		if (sound != null) {
 			playSound(sound, 1.0F, 1.0F);

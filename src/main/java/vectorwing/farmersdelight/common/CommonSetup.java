@@ -41,7 +41,7 @@ public class CommonSetup
 		Configuration.SOUP_ITEM_LIST.get().forEach((key) -> {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(key));
 			if (item instanceof BowlFoodItem) {
-				ObfuscationReflectionHelper.setPrivateValue(Item.class, item, 16, "maxStackSize");
+				ObfuscationReflectionHelper.setPrivateValue(Item.class, item, 16, "f_41370_");
 			}
 		});
 	}

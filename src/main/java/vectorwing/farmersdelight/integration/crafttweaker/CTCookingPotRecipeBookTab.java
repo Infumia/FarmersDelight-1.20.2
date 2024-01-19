@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
@@ -14,3 +15,4 @@ import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab;
 public class CTCookingPotRecipeBookTab
 {
 }
+*/

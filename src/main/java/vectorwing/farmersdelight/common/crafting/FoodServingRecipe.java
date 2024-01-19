@@ -15,8 +15,8 @@ import vectorwing.farmersdelight.common.registry.ModRecipeSerializers;
 
 public class FoodServingRecipe extends CustomRecipe
 {
-	public FoodServingRecipe(ResourceLocation id, CraftingBookCategory category) {
-		super(id, category);
+	public FoodServingRecipe(CraftingBookCategory category) {
+		super(category);
 	}
 
 	@Override

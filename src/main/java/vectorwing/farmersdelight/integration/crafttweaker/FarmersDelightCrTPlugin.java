@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
@@ -21,3 +22,4 @@ public class FarmersDelightCrTPlugin implements ICraftTweakerPlugin {
         handler.registerRecipeComponent(RecipeHandlerUtils.COOKING_TAB_COMPONENT);
     }
 }
+*/

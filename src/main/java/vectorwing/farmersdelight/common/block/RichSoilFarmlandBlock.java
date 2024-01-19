@@ -81,7 +81,7 @@ public class RichSoilFarmlandBlock extends FarmBlock
 			}
 
 			if (aboveBlock instanceof BonemealableBlock growable && MathUtils.RAND.nextFloat() <= Configuration.RICH_SOIL_BOOST_CHANCE.get()) {
-				if (growable.isValidBonemealTarget(level, pos.above(), aboveState, false) && ForgeHooks.onCropsGrowPre(level, pos.above(), aboveState, true)) {
+				if (growable.isValidBonemealTarget(level, pos.above(), aboveState) && ForgeHooks.onCropsGrowPre(level, pos.above(), aboveState, true)) {
 					growable.performBonemeal(level, level.random, pos.above(), aboveState);
 					if (!level.isClientSide) {
 						level.levelEvent(2005, pos.above(), 0);

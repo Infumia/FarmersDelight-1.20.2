@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker.managers;
 
 
@@ -19,17 +20,20 @@ import vectorwing.farmersdelight.common.registry.ModRecipeTypes;
 import vectorwing.farmersdelight.common.utility.ListUtils;
 import vectorwing.farmersdelight.integration.crafttweaker.actions.ActionRemoveCuttingBoardRecipe;
 
+*/
 /**
  * Farmer's Delight Cutting Board recipes.
  *
  * @docParam this <recipetype:farmersdelight:cutting>
- */
+ *//*
+
 @Document("mods/FarmersDelight/CuttingBoard")
 @ZenRegister
 @ZenCodeType.Name("mods.farmersdelight.CuttingBoard")
 public class CuttingBoardRecipeManager implements IRecipeManager
 {
-    /**
+    */
+/**
      * Add a cutting board recipe.
      * The tool ingredient can be a {@link net.minecraftforge.common.ToolAction}. It will get cast implicitly.
      * This allows you to work with any tool that provides that action to Forge.
@@ -45,7 +49,8 @@ public class CuttingBoardRecipeManager implements IRecipeManager
      * @docParam results [<item:minecraft:flint>]
      * @docParam tool <item:minecraft:string>
      * @docParam sound "minecraft:block.gravel.break"
-     */
+     *//*
+
     @ZenCodeType.Method
     public void addRecipe(String name,
                           IIngredient input,
@@ -64,13 +69,15 @@ public class CuttingBoardRecipeManager implements IRecipeManager
                 ""));
     }
 
-    /**
+    */
+/**
      * Remove a cutting board recipe with multiple outputs.
      *
      * @param outputs Output items
      *
      * @docParam outputs [<item:farmersdelight:cooked_salmon_slice> * 2, <item:minecraft:bone_meal>]
-     */
+     *//*
+
     @ZenCodeType.Method
     public void removeRecipe(IItemStack[] outputs) {
         CraftTweakerAPI.apply(new ActionRemoveCuttingBoardRecipe(this, outputs));
@@ -81,3 +88,4 @@ public class CuttingBoardRecipeManager implements IRecipeManager
         return ModRecipeTypes.CUTTING.get();
     }
 }
+*/

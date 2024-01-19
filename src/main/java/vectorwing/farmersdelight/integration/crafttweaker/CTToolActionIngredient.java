@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
@@ -66,3 +67,4 @@ public class CTToolActionIngredient implements IIngredient {
 
     }
 }
+*/

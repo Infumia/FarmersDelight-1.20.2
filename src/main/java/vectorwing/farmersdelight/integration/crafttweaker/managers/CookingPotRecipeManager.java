@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker.managers;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
@@ -19,17 +20,20 @@ import vectorwing.farmersdelight.common.registry.ModRecipeTypes;
 import vectorwing.farmersdelight.common.utility.ListUtils;
 import vectorwing.farmersdelight.integration.crafttweaker.FarmersDelightCrTPlugin;
 
+*/
 /**
  * Farmer's Delight Cooking Pot recipes.
  *
  * @docParam this <recipetype:farmersdelight:cooking>
- */
+ *//*
+
 @Document("mods/FarmersDelight/CookingPot")
 @ZenRegister
 @ZenCodeType.Name("mods.farmersdelight.CookingPot")
 public class CookingPotRecipeManager implements IRecipeManager
 {
-    /**
+    */
+/**
      * Add a cooking pot recipe.
      * The Cooking Tab is optional.
      *
@@ -47,7 +51,8 @@ public class CookingPotRecipeManager implements IRecipeManager
      * @docParam container <item:minecraft:apple>
      * @docParam experience 100
      * @docParam cookTime 400
-     */
+     *//*
+
     @ZenCodeType.Method
     public void addRecipe(String name,
                           IItemStack output,
@@ -88,3 +93,4 @@ public class CookingPotRecipeManager implements IRecipeManager
         return ModRecipeTypes.COOKING.get();
     }
 }
+*/

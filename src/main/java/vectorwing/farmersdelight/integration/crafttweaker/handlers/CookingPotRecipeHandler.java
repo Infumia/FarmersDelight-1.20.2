@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker.handlers;
 
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
@@ -81,3 +82,4 @@ public final class CookingPotRecipeHandler implements IRecipeHandler<CookingPotR
         return Optional.of(new CookingPotRecipe(name, group, cookTab, inputList, output.getInternal(), container.getInternal(), exp, time));
     }
 }
+*/

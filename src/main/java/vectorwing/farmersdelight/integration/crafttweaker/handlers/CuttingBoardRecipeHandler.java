@@ -1,3 +1,4 @@
+/* TODO: Reimplement CraftTweaker support
 package vectorwing.farmersdelight.integration.crafttweaker.handlers;
 
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
@@ -80,3 +81,4 @@ public class CuttingBoardRecipeHandler implements IRecipeHandler<CuttingBoardRec
         return Optional.of(new CuttingBoardRecipe(name, group, input, tool.asVanillaIngredient(), stackedResults, sound));
     }
 }
+*/
