@@ -1,4 +1,4 @@
-/* TODO: Reimplement CraftTweaker support
+/*
 package vectorwing.farmersdelight.integration.crafttweaker.managers;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
@@ -12,6 +12,7 @@ import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab;
@@ -30,67 +31,66 @@ import vectorwing.farmersdelight.integration.crafttweaker.FarmersDelightCrTPlugi
 @Document("mods/FarmersDelight/CookingPot")
 @ZenRegister
 @ZenCodeType.Name("mods.farmersdelight.CookingPot")
-public class CookingPotRecipeManager implements IRecipeManager
-{
-    */
+public class CookingPotRecipeManager implements IRecipeManager<CookingPotRecipe> {
+  */
 /**
-     * Add a cooking pot recipe.
-     * The Cooking Tab is optional.
-     *
-     * @param name       Name of the recipe to add
-     * @param output     Output item
-     * @param inputs     Input ingredients
-     * @param container  Container item
-     * @param experience Experience granted
-     * @param cookTime   Cooking time
-     *
-     * @docParam name "cooking_pot_test"
-     * @docParam output <item:minecraft:enchanted_golden_apple>
-     * @docParam inputs [<item:minecraft:gold_block>]
-     * @docParam cookingPotRecipeBookTab <constant:farmersdelight:cooking_pot_recipe_book_tab:misc>
-     * @docParam container <item:minecraft:apple>
-     * @docParam experience 100
-     * @docParam cookTime 400
-     *//*
+   * Add a cooking pot recipe.
+   * The Cooking Tab is optional.
+   *
+   * @param name       Name of the recipe to add
+   * @param output     Output item
+   * @param inputs     Input ingredients
+   * @param container  Container item
+   * @param experience Experience granted
+   * @param cookTime   Cooking time
+   * @docParam name "cooking_pot_test"
+   * @docParam output <item:minecraft:enchanted_golden_apple>
+   * @docParam inputs [<item:minecraft:gold_block>]
+   * @docParam cookingPotRecipeBookTab <constant:farmersdelight:cooking_pot_recipe_book_tab:misc>
+   * @docParam container <item:minecraft:apple>
+   * @docParam experience 100
+   * @docParam cookTime 400
+   *//*
 
-    @ZenCodeType.Method
-    public void addRecipe(String name,
-                          IItemStack output,
-                          IIngredient[] inputs,
-                          @ZenCodeType.Optional CookingPotRecipeBookTab cookingPotRecipeBookTab,
-                          @ZenCodeType.Optional IItemStack container,
-                          @ZenCodeType.OptionalFloat float experience,
-                          @ZenCodeType.OptionalInt(200) int cookTime) {
-        if (!validateInputs(inputs)) return;
 
-        CraftTweakerAPI.apply(new ActionAddRecipe(this,
-                new CookingPotRecipe(CraftTweakerConstants.rl(name),
-                        "",
-                        cookingPotRecipeBookTab,
-                        ListUtils.mapArrayIndexSet(inputs,
-                                IIngredient::asVanillaIngredient,
-                                NonNullList.withSize(inputs.length, Ingredient.EMPTY)),
-                        output.getInternal(),
-                        container == null ? ItemStack.EMPTY : container.getInternal(),
-                        experience,
-                        cookTime),
-                ""));
+  @ZenCodeType.Method
+  public void addRecipe(String name,
+                        IItemStack output,
+                        IIngredient[] inputs,
+                        @ZenCodeType.Optional CookingPotRecipeBookTab cookingPotRecipeBookTab,
+                        @ZenCodeType.Optional IItemStack container,
+                        @ZenCodeType.OptionalFloat float experience,
+                        @ZenCodeType.OptionalInt(200) int cookTime) {
+    if (!validateInputs(inputs)) return;
+
+    final var id = CraftTweakerConstants.rl(name);
+    final var recipe = new CookingPotRecipe(
+      "",
+      cookingPotRecipeBookTab,
+      ListUtils.mapArrayIndexSet(inputs,
+        IIngredient::asVanillaIngredient,
+        NonNullList.withSize(inputs.length, Ingredient.EMPTY)),
+      output.getInternal(),
+      container == null ? ItemStack.EMPTY : container.getInternal(),
+      experience,
+      cookTime);
+    CraftTweakerAPI.apply(new ActionAddRecipe<>(this, new RecipeHolder<>(id, recipe), ""));
+  }
+
+  private boolean validateInputs(IIngredient[] inputs) {
+    if (inputs.length == 0) {
+      FarmersDelightCrTPlugin.LOGGER_CT.error("No ingredients for cooking recipe");
+      return false;
+    } else if (inputs.length > CookingPotRecipe.INPUT_SLOTS) {
+      FarmersDelightCrTPlugin.LOGGER_CT.error("Too many ingredients for cooking recipe! The max is {}", CookingPotRecipe.INPUT_SLOTS);
+      return false;
     }
+    return true;
+  }
 
-    private boolean validateInputs(IIngredient[] inputs) {
-        if (inputs.length == 0) {
-            FarmersDelightCrTPlugin.LOGGER_CT.error("No ingredients for cooking recipe");
-            return false;
-        } else if (inputs.length > CookingPotRecipe.INPUT_SLOTS) {
-            FarmersDelightCrTPlugin.LOGGER_CT.error("Too many ingredients for cooking recipe! The max is %s", CookingPotRecipe.INPUT_SLOTS);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public RecipeType<CookingPotRecipe> getRecipeType() {
-        return ModRecipeTypes.COOKING.get();
-    }
+  @Override
+  public RecipeType<CookingPotRecipe> getRecipeType() {
+    return ModRecipeTypes.COOKING.get();
+  }
 }
 */

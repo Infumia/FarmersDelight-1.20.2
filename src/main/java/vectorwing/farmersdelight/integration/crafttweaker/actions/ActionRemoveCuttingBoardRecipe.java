@@ -1,15 +1,13 @@
-/* TODO: Reimplement CraftTweaker support
+/*
 package vectorwing.farmersdelight.integration.crafttweaker.actions;
 
 import com.blamejared.crafttweaker.api.action.recipe.ActionRecipeBase;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.item.MCItemStackMutable;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -20,28 +18,28 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
-public class ActionRemoveCuttingBoardRecipe extends ActionRecipeBase
+public class ActionRemoveCuttingBoardRecipe extends ActionRecipeBase<CuttingBoardRecipe>
 {
     private final IItemStack[] outputs;
 
-    public ActionRemoveCuttingBoardRecipe(IRecipeManager manager, IItemStack[] outputs) {
+    public ActionRemoveCuttingBoardRecipe(IRecipeManager<CuttingBoardRecipe> manager, IItemStack[] outputs) {
         super(manager);
         this.outputs = outputs;
     }
 
     @Override
     public void apply() {
-        Iterator<Map.Entry<ResourceLocation, Recipe<?>>> it = getManager().getRecipes().entrySet().iterator();
+        Iterator<Map.Entry<ResourceLocation, RecipeHolder<CuttingBoardRecipe>>> it = getManager().getRecipes().entrySet().iterator();
         while (it.hasNext()) {
-            CuttingBoardRecipe recipe = (CuttingBoardRecipe) it.next().getValue();
-            if (recipe.getResults().size() != outputs.length) {
+            RecipeHolder<CuttingBoardRecipe> recipe = it.next().getValue();
+            if (recipe.value().getResults().size() != outputs.length) {
                 continue;
             }
 
             check:
             {
                 int i = 0;
-                for (ItemStack result : recipe.getResults()) {
+                for (ItemStack result : recipe.value().getResults()) {
                     if (!outputs[i++].matches(new MCItemStackMutable(result))) {
                         break check;
                     }

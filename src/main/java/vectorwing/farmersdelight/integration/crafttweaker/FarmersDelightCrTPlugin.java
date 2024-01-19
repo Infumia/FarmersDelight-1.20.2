@@ -1,4 +1,4 @@
-/* TODO: Reimplement CraftTweaker support
+/*
 package vectorwing.farmersdelight.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
